@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.ArrayList; //Vetor dinamico em java, add(), remove(), get(), size();
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
@@ -24,7 +24,7 @@ public class Main{
                 op = Integer.parseInt(tempOp.split(". ", 2)[0]); //Separando o int da String
                 switch(op){
                     case 0:
-                        System.out.println("Valeu, falou");
+                        System.out.println("Saindo...");
                         break;
                 
                     case 1:
@@ -35,11 +35,13 @@ public class Main{
                     case 2:
                         opArvore = Arvore.escolhaArvore(floresta); 
                         if(opArvore >= 0){ //Precisa de 1+ árvore(s)
+                            System.out.println("**************************************************");
                             Node.leituraEmOrdem(floresta.get(opArvore).getRaiz());
+                            System.out.println("**************************************************");
                         }
                         break;
                 
-                    case 3: //Insercao para diferentes tipos de árvore vai ser feito em inserirArvore
+                    case 3: 
                         opArvore = Arvore.escolhaArvore(floresta);
                             if(opArvore >= 0){ //Precisa de 1+ árvore(s)
                                 floresta.get(opArvore).inserirNode(floresta.get(opArvore).getRaiz(),(new Node(scan)));
@@ -49,20 +51,23 @@ public class Main{
                     case 4:
                         opArvore = Arvore.escolhaArvore(floresta);
                         if(opArvore >= 0){ //Precisa de 1+ árvore(s)
-                            JOptionPane.showMessageDialog(null, "Alunos exibidos no terminal", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                            Node.leituraEmOrdem(floresta.get(opArvore).getRaiz());
-                            System.out.println("Insira a matricula do aluno a ser removido");
-                            int tempInt = 0;
-                            while(tempInt < 196000000){
-                                tempInt = Integer.parseInt(JOptionPane.showInputDialog(null,"Matricula","Remocao",JOptionPane.INFORMATION_MESSAGE)); //Lendo a matricula
-                                if(tempInt < 196000000){ //Caso de erro
-                                    JOptionPane.showMessageDialog(null, "Matricula invalida", "Erro", JOptionPane.ERROR_MESSAGE); 
+                            JOptionPane.showMessageDialog(null, "Elementos exibidos no terminal", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                            Node.leituraEmOrdem(floresta.get(opArvore).getRaiz()); //Criar um usando JPanes depois
+                            System.out.println("Insira a chave do elemento a ser removido");
+                            int tempInt = -1;
+                            while(tempInt < 0){
+                                tempInt = Integer.parseInt(JOptionPane.showInputDialog(null,"Chave","Remocao",JOptionPane.INFORMATION_MESSAGE)); //Lendo a chave
+                                if(tempInt < 0){ //Caso de erro
+                                    JOptionPane.showMessageDialog(null, "Chave invalida", "Erro", JOptionPane.ERROR_MESSAGE); 
                                 }
                             }
                             check = floresta.get(opArvore).removeNode(null,floresta.get(opArvore).getRaiz(), tempInt); 
                             if(check == false){ //Node não foi removido
                                 System.out.println();
-                                JOptionPane.showMessageDialog(null, "Aluno nao encontrado!", "Remocao", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Elemento nao encontrado!", "Remocao", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Elemento removido", "Remocao", JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
                         break;
@@ -70,20 +75,19 @@ public class Main{
                     case 5:
                         opArvore = Arvore.escolhaArvore(floresta);
                         if(opArvore >= 0){ //Precisa de 1+ árvore(s)
-                            int tempInt = 0;
-                            while(tempInt < 196000000){
-                                tempInt = Integer.parseInt(JOptionPane.showInputDialog(null,"Matricula","Busca",JOptionPane.INFORMATION_MESSAGE)); //Lendo a matricula
-                                if(tempInt < 196000000){ //Caso de erro
-                                    JOptionPane.showMessageDialog(null, "Matricula invalida", "Erro", JOptionPane.ERROR_MESSAGE); 
+                            int tempInt = -1;
+                            while(tempInt < 0){
+                                tempInt = Integer.parseInt(JOptionPane.showInputDialog(null,"Chave","Busca",JOptionPane.INFORMATION_MESSAGE)); //Lendo a chave
+                                if(tempInt < 0){ //Caso de erro
+                                    JOptionPane.showMessageDialog(null, "Chave invalida", "Erro", JOptionPane.ERROR_MESSAGE); 
                                 }
                             }
-                            //Função mais geral
-                            Node nodeProcurado = floresta.get(opArvore).buscaNode(floresta.get(opArvore).getRaiz(),tempInt);
+                            Node nodeProcurado = floresta.get(opArvore).buscaNode(floresta.get(opArvore).getRaiz(),tempInt); //buscaNode retorna o Node inteiro
                             if(nodeProcurado != null){ //Node encontrado
                                 JOptionPane.showMessageDialog(null, nodeProcurado, "Busca", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else{
-                                JOptionPane.showMessageDialog(null, "Aluno nao encontrado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Elemento nao encontrado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
                         break;

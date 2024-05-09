@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-//import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Arvore{
@@ -31,8 +30,8 @@ public class Arvore{
     public void setRaiz(Node novoNo){ //Mudando a raiz
         raiz = novoNo;
     }
-
-    public static int escolhaArvore(ArrayList<Arvore> floresta){ //-1 -> sair, 0+ -> índice
+    //Funções
+    public static int escolhaArvore(ArrayList<Arvore> floresta){ //-1 -> saída, 0+ -> índice
         int escolha = -1; 
         String[] strNomes = new String[floresta.size()+1];
         strNomes[0] = "0. Retornar ao menu principal";
@@ -70,14 +69,14 @@ public class Arvore{
                     noDestino.setDireita(newNode);
                 }
             }
+            //Se as chaves forem iguais (não permitido em ABB) nada acontece
         }
         else{ //Nova raiz
             raiz = new Node(newNode);
         }
     }
 
-    public boolean removeNode(Node noPai, Node noAtual, int chave){ //Chave é a matrícula do indivíduo que será removido
-        boolean sucess = true;
+    public boolean removeNode(Node noPai, Node noAtual, int chave){ //"chave" é a chave do Node a ser removido
         if (noAtual != null) {
             //Procurando o Node
             if(chave > noAtual.getChave()){ //Vai para a direita
@@ -117,9 +116,9 @@ public class Arvore{
                         }
                     }
                     else{ //Pai de 2
-                        Node maiorEsquerda = noAtual.getEsquerda(); //Maior da esquerda dessa vez 
+                        Node maiorEsquerda = noAtual.getEsquerda(); //Maior da esquerda
                         while(maiorEsquerda.getDireita() != null){
-                            maiorEsquerda = maiorEsquerda.getDireita(); //Realmente achando o maior
+                            maiorEsquerda = maiorEsquerda.getDireita(); //Achando o maior da esquerda
                         }
     
                         //Salvando os ponteiros
@@ -140,9 +139,9 @@ public class Arvore{
             }
         }
         else{
-            sucess = false;
+            return false; //Node não encontrado
         }
-        return sucess;
+        return true;
     }
 
     public Node buscaNode(Node noAtual, int chaveProcurada){
@@ -157,7 +156,8 @@ public class Arvore{
         return noAtual; //Retorna null se não achar
     }
 
-    public void mergeArvores(Arvore arvoreFinal, Node arvoreSecundaria){
+    //Possível criar uma árvore completamente nova com a fusão das duas ao chamar mergeArvores() duas vezes
+    public void mergeArvores(Arvore arvoreFinal, Node arvoreSecundaria){ //P.s. Não remove nenhuma árvore
         if(arvoreSecundaria != null){ //Percorre a árvore secundária em ordem e insere os seus elementos na árvore final
             mergeArvores(arvoreFinal, arvoreSecundaria.getEsquerda());
             inserirNode(arvoreFinal.raiz, new Node(arvoreSecundaria)); //Efetivamente reseta os ponteiros

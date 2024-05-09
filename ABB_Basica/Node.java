@@ -1,77 +1,53 @@
-import java.util.ArrayList; //Vetor dinamico em java, add(), remove(), get(), size();
 import java.util.Scanner; //Scanner(System.in)
 
 class Node{
-    private int chave; //Nesse caso, chave = matrícula
-    private String nomeAluno;
-    private ArrayList<Double> vetorNotas; //vetor dinamico
+    private int chave;
+    private String nomeNode;
+    //Dados extras casos necessário
     private Node esquerda;
     private Node direita;
 
-    public Node(){ //Cria um no vazio, pense bem antes de usar
+    public Node(){ //Cria um node vazio
         chave = 0;
-        nomeAluno = null;
-        vetorNotas = new ArrayList<>();
+        nomeNode = null;
         esquerda = direita = null;
     }
 
     public Node(Scanner scan){ //Construtor do 0
-        System.out.print("Insira a matricula do(a) aluno(a): "); //Matrícula/chave
+        System.out.print("Insira a chave do elemento: "); //Chave
         do{
             chave = Integer.parseInt(scan.nextLine());
-            if(chave < 196000000){
-                System.out.print("Insira uma matricula valida: ");
+            if(chave < 0){
+                System.out.print("Insira uma chave valida: ");
             }
-        }while(chave < 196000000);
-        System.out.print("Insira o nome do(a) aluno(a): "); //Nome
+        }while(chave < 0);
+        System.out.print("Insira o nome do elemento: "); //Nome
         do{
-            nomeAluno = scan.nextLine();
-            if(nomeAluno.length() == 0){
+            nomeNode = scan.nextLine();
+            if(nomeNode.length() == 0){
                 System.out.print("Insira um nome valido: ");
             }
-        }while(nomeAluno.length() == 0);
-        int numNotas;
-        System.out.print("Insira o numero de notas a ser registrado: "); 
-        do{
-            numNotas = Integer.parseInt(scan.nextLine());
-            if(numNotas < 1){
-                System.out.print("Insira uma quantidade valida: ");
-            }
-        }while(numNotas < 1);
-        vetorNotas = new ArrayList<>();
-        for(int i = 1; i <= numNotas; i++){ 
-            System.out.print("Nota " + i + ": ");
-            Double temp;
-            do{
-                temp = Double.parseDouble(scan.nextLine());
-                if(temp < 0 || temp > 10){
-                    System.out.print("Insira uma nota valida: ");
-                }
-            }while(temp < 0 || temp > 10); 
-            vetorNotas.add(temp); //adicionando no vetor 
-        }
+        }while(nomeNode.length() == 0);
+        esquerda = direita = null; //Arrumando os ponteiros
+    }
+
+    public Node(int chave, String nomeNode){
+        this.chave = chave;
+        this.nomeNode = nomeNode;
         esquerda = direita = null; //Arrumando os ponteiros
     }
 
     public Node(Node newInfo){ //Basicamente copia um node
         chave = newInfo.getChave();
-        nomeAluno = newInfo.getNomeAluno();
-        while (vetorNotas != null){ //Soa desnecessário
-            vetorNotas.remove(0);
-        }
-        vetorNotas = new ArrayList<>(newInfo.getVetorNotas()); 
-        //esquerda = direita = null; //Necessário?
+        nomeNode = newInfo.getNomeElemento();
     }
 
     //Lista de get
     public int getChave(){
         return chave;
     }
-    public String getNomeAluno(){
-        return nomeAluno;
-    }
-    public ArrayList<Double> getVetorNotas(){ 
-        return vetorNotas;
+    public String getNomeElemento(){
+        return nomeNode;
     }
     public Node getEsquerda(){
         return esquerda;
@@ -85,14 +61,8 @@ class Node{
     /* public void setChave(int x){ //Fiz isso aqui por princípio mesmo, usar ela é uma péssima ideia
         chave = x;
     } */
-    public void setNomeAluno(String novoNome){ 
-        nomeAluno = novoNome;
-    }
-    public void setNotasAluno(ArrayList<Double> novasNotas){
-        while (vetorNotas != null){ 
-            vetorNotas.remove(0);
-        }
-        vetorNotas = new ArrayList<>(novasNotas);
+    public void setNomeElemento(String novoNome){ 
+        nomeNode = novoNome;
     }
     public void setEsquerda(Node newNode){
         esquerda = newNode;
@@ -101,21 +71,10 @@ class Node{
         direita = newNode;
     }
 
-    public void addNota(Double x){ //Adicionar notas para o aluno
-        vetorNotas.add(x);
-    }
-
-    public String toString(){ //Imprime as informações do cara
-        String temp = new String();
-        for(int i = 0; i < vetorNotas.size(); i++){
-            temp += "Nota " + (i+1) + ": " + vetorNotas.get(i) + "\n";
-        }
-
+    public String toString(){ //Imprime as informações do elemento
         return 
-            "*******************************\n" +
-            "Aluno: " + nomeAluno + "\n" +
-            "Matrícula: " + chave + "\n"
-            + temp;
+            "Elemento: " + nomeNode + "\n" +
+            "Chave: " + chave; //Sem "\n" para mais liberdade na impressão
     }
 
     public static void leituraEmOrdem(Node no){ //E R D
